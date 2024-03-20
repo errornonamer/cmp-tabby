@@ -20,8 +20,6 @@ local M = {}
 ---@field priority integer
 ---@field run_on_every_keystroke boolean Generate new completion items on every keystroke.
 ---@field ignored_file_types string[] Which file types to ignore.
----@field context_disable_patterns string[] Which workspace to disable context provider on
-
 local conf_defaults = {
     endpoint = 'http://localhost',
     token = nil,
@@ -36,7 +34,6 @@ local conf_defaults = {
         -- uncomment to ignore in lua:
         -- 'lua',
     },
-    context_disable_patterns = {},
 }
 
 ---@param params Config?

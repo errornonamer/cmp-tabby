@@ -1,6 +1,6 @@
 # cmp-tabby
 
-[Tabby](https://github.com/tabbyml/tabbl) source for [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+[Tabby](https://github.com/tabbyml/tabby) source for [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 Should work on all devices supported by Tabby,
 although `metal` and `experimental_http` backends are not tested because
@@ -13,6 +13,8 @@ Roughly based on [tzachar/cmp-tabnine](https://github.com/tzachar/cmp-tabnine)
 ### Dependencies
 
 `sh`, `git`, `curl` and [`cargo`](https://www.rust-lang.org/tools/install)
+
+There's no Windows installation script but it shouldn't be that hard to build tabby manually
 
 ### Using a plugin manager
 
@@ -51,8 +53,6 @@ tabby:setup({
     ignored_file_types = { -- default is not to ignore
         -- uncomment to ignore in lua:
         -- 'lua',
-    },
-    context_disable_patterns = {
     },
 })
 ```
@@ -120,16 +120,3 @@ Tabby supports multi-line suggestions. If a suggestion is multi-line, we add
 the `entry.completion_item.data.detail.multiline` flag to the completion entry
 and the entire suggestion to the `documentation` property of the entry, such
 that `cmp` will display the suggested lines in the documentation panel.
-
-## Language agnostic repository context
-
-Not implemented yet - use [Tabby's built-in context provider](https://tabby.tabbyml.com/docs/configuration#repository-context-for-code-completion)
-
-cmp-tabby implements [repository context](https://tabby.tabbyml.com/blog/2023/10/16/repository-context-for-code-completion)
-on client side using [treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-and configured [LSP](https://neovim.io/doc/user/lsp.html) server. This allows
-the plugin to provide context in unsupported languages and unindexed repositories.
-This feature is enabled automatically when required treesitter parser is
-installed and LSP server that has `textDocument.definition`,
-`textDocument.implementation` and `textDocument.references`
-capability is attached to the buffer.

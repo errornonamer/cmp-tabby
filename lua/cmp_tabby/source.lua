@@ -3,7 +3,6 @@ local api = vim.api
 local fn = vim.fn
 local conf = require('cmp_tabby.config')
 
---require('cmp.utils.debug').flag = true
 local function dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     print(unpack(objects))
@@ -64,7 +63,6 @@ end
 
 ---@class CompletionServer
 ---@field job integer
----@field port integer
 local CompletionServer = {
     job = 0,
 }
@@ -102,6 +100,7 @@ function CompletionServer.on_exit(self, job, code)
         return
     end
 
+    -- if it works it ain't stupid
     port = math.random(49152, 65535)
     self.job = fn.jobstart({
         binary,
@@ -180,7 +179,7 @@ function CompletionClient.do_complete(self)
         vim.json.encode(req),
         get_endpoint() .. '/v1/completions',
     }, {
-        on_stdout = function(a, data, c)
+        on_stdout = function(_, data, _)
             self:on_stdout(data)
         end,
     })
@@ -339,7 +338,7 @@ function Source.complete(self, ctx, callback)
     self.completion_job = CompletionClient.new(ctx, callback)
 end
 
-function Source.execute(self, item, callback)
+function Source:execute(item, callback)
     local req = {
         type = 'select',
         completion_id = item.data.id,
