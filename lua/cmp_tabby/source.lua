@@ -159,7 +159,7 @@ function CompletionClient.do_complete(self)
     ---@field user string
     ---@field temperature number?
     local req = {
-        --language = 'unknown', -- todo: provide language
+        language = vim.filetype.match({ buf = 0 }) or 'unknown',
         segments = {
             prefix = before,
             suffix = after,
