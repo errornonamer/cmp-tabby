@@ -166,6 +166,11 @@ function CompletionClient.do_complete(self)
         },
         temperature = conf:get('temperature'),
     }
+	local auth = {}
+	local token = conf:get('token')
+	if token ~= nil then
+		auth = { '-H', 'Authorization: Bearer ' .. token }
+	end
     self.job = fn.jobstart({
         'curl',
         '-s',
@@ -178,6 +183,7 @@ function CompletionClient.do_complete(self)
         '-d',
         vim.json.encode(req),
         get_endpoint() .. '/v1/completions',
+		unpack(auth)
     }, {
         on_stdout = function(_, data, _)
             self:on_stdout(data)
